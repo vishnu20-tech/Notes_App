@@ -1,0 +1,88 @@
+<% layout('./layouts/boilerplate') %>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-7">
+
+            <!-- Back Button -->
+            <a href="/notes/<%= note._id %>" class="btn btn-outline-secondary btn-sm mb-4">
+                <i class="bi bi-arrow-left me-1"></i> Back to Note
+            </a>
+
+            <!-- Edit Form Card -->
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body p-4 p-md-5">
+
+                    <!-- Header -->
+                    <div class="text-center mb-4">
+                        <div class="d-inline-flex align-items-center justify-content-center rounded-3 bg-primary-subtle text-primary p-3 mb-3">
+                            <i class="bi bi-pencil-square fs-2"></i>
+                        </div>
+
+                        <h2 class="fw-bold mb-2">Edit Your Note</h2>
+                        <p class="text-muted mb-0">
+                            Update your title or description and save your changes.
+                        </p>
+                    </div>
+
+                    <form action="/notes/<%= note._id %>?_method=PUT" method="POST">
+
+                        <!-- Title -->
+                        <div class="mb-4">
+                            <label for="title" class="form-label fw-semibold">
+                                Note Title
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control form-control-lg"
+                                id="title"
+                                name="title"
+                                value="<%= note.title %>"
+                                placeholder="Enter note title"
+                                minlength="3"
+                                maxlength="100"
+                                required
+                            >
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-4">
+                            <label for="description" class="form-label fw-semibold">
+                                Note Description
+                            </label>
+
+                            <textarea
+                                class="form-control"
+                                id="description"
+                                name="description"
+                                rows="8"
+                                placeholder="Write your note here..."
+                                required
+                            ><%= note.description %></textarea>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="d-flex flex-column flex-sm-row gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg flex-grow-1">
+                                <i class="bi bi-check2-circle me-1"></i> Save Changes
+                            </button>
+
+                            <a href="/notes/<%= note._id %>" class="btn btn-outline-secondary btn-lg">
+                                Cancel
+                            </a>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+            <p class="text-center text-muted small mt-3">
+                <i class="bi bi-shield-check me-1"></i>
+                Only the note owner should be allowed to make changes.
+            </p>
+
+        </div>
+    </div>
+</div>

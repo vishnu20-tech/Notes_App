@@ -1,0 +1,397 @@
+<% layout('./layouts/boilerplate') %>
+
+<div class="container py-5">
+
+    <!-- Hero / Page Header -->
+    <div class="notes-hero rounded-4 p-4 p-md-5 mb-4">
+        <div class="row align-items-center g-4">
+            <div class="col-md-8">
+                <span class="badge rounded-pill bg-white text-primary border mb-3 px-3 py-2">
+                    <i class="bi bi-journal-bookmark me-1"></i>
+                    YOUR PERSONAL SPACE
+                </span>
+
+                <h1 class="display-6 fw-bold mb-2">My Notes</h1>
+
+                <p class="text-secondary mb-0">
+                    Capture ideas, organize your thoughts, and keep
+                    everything important in one place.
+                </p>
+            </div>
+
+            <div class="col-md-4 text-md-end">
+                <a href="/notes/new"
+                   class="btn btn-primary btn-lg rounded-3 px-4">
+                    <i class="bi bi-plus-lg me-2"></i>
+                    Create Note
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Stats -->
+    <div class="row g-3 mb-4">
+
+        <div class="col-12 col-sm-6">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-body p-4 d-flex align-items-center gap-3">
+                    <div class="stat-icon bg-primary-subtle text-primary">
+                        <i class="bi bi-journal-text fs-3"></i>
+                    </div>
+
+                    <div>
+                        <p class="text-secondary small mb-1">Total Notes</p>
+                        <h3 class="fw-bold mb-0"><%= notes.length %></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-body p-4 d-flex align-items-center gap-3">
+                    <div class="stat-icon bg-success-subtle text-success">
+                        <i class="bi bi-lightbulb fs-3"></i>
+                    </div>
+
+                    <div>
+                        <p class="text-secondary small mb-1">Your Ideas</p>
+                        <h3 class="fw-bold mb-0">
+                            <%= notes.length === 0 ? 'Start here' : 'Keep growing' %>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Search and List Header -->
+    <div class="d-flex flex-column flex-md-row justify-content-between
+                align-items-md-center gap-3 mb-4">
+
+        <div>
+            <h4 class="fw-bold mb-1">All your notes</h4>
+            <p class="text-secondary mb-0 small">
+                Browse your notes or search by title and description.
+            </p>
+        </div>
+
+        <% if (notes.length > 0) { %>
+            <div class="notes-search">
+                <i class="bi bi-search text-secondary"></i>
+                <input
+                    type="search"
+                    id="noteSearch"
+                    class="form-control border-0 shadow-none"
+                    placeholder="Search notes..."
+                    aria-label="Search notes"
+                >
+            </div>
+        <% } %>
+
+    </div>
+
+
+    <!-- Notes -->
+    <% if (notes.length === 0) { %>
+
+        <div class="empty-state text-center rounded-4 p-5">
+            <div class="empty-icon mx-auto mb-4">
+                <i class="bi bi-journal-plus"></i>
+            </div>
+
+            <h3 class="fw-bold mb-2">Your space is ready</h3>
+
+            <p class="text-secondary mx-auto mb-4"
+               style="max-width: 420px;">
+                You haven't created any notes yet. Start with an idea,
+                a reminder, or something you want to remember.
+            </p>
+
+            <a href="/notes/new" class="btn btn-primary rounded-3 px-4 py-2">
+                <i class="bi bi-plus-lg me-2"></i>
+                Create your first note
+            </a>
+        </div>
+
+    <% } else { %>
+
+        <div class="row g-4" id="notesGrid">
+
+            <% for (let note of notes) { %>
+
+                <div class="col-12 col-md-6 col-xl-4 note-item">
+
+                    <article class="card note-card h-100 rounded-4">
+
+                        <div class="card-body p-4 d-flex flex-column">
+
+                            <!-- Card Header -->
+                            <div class="d-flex justify-content-between
+                                        align-items-center mb-4">
+
+                                <div class="note-icon">
+                                    <i class="bi bi-file-earmark-text"></i>
+                                </div>
+
+                                <span class="note-label">
+                                    <i class="bi bi-circle-fill me-1"></i>
+                                    Personal note
+                                </span>
+                            </div>
+
+
+                            <!-- Title and Description -->
+                            <h5 class="fw-bold mb-3 note-title">
+                                <%= note.title %>
+                            </h5>
+
+                            <p class="text-secondary note-description flex-grow-1">
+                                <%= note.description.length > 150
+                                    ? note.description.substring(0, 150) + '...'
+                                    : note.description %>
+                            </p>
+
+
+                            <!-- Metadata -->
+                            <div class="note-meta py-3 mt-3">
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="author-avatar">
+                                        <i class="bi bi-person-fill"></i>
+                                    </div>
+
+                                    <div class="overflow-hidden">
+                                        <small class="text-secondary d-block">
+                                            Created by
+                                        </small>
+
+                                        <span class="fw-semibold text-truncate d-block">
+                                            <%= note.user
+                                                ? note.user.username
+                                                : 'Unknown user' %>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- Actions -->
+                            <a href="/notes/<%= note._id %>"
+                               class="btn btn-outline-primary rounded-3 w-100 mt-2">
+                                Open note
+                                <i class="bi bi-arrow-up-right ms-2"></i>
+                            </a>
+
+                        </div>
+                    </article>
+
+                </div>
+
+            <% } %>
+
+        </div>
+
+        <!-- No Search Results -->
+        <div id="noSearchResults"
+             class="text-center py-5 d-none">
+
+            <i class="bi bi-search display-4 text-secondary"></i>
+
+            <h5 class="fw-bold mt-3">No matching notes</h5>
+
+            <p class="text-secondary mb-0">
+                Try searching with another title or keyword.
+            </p>
+        </div>
+
+    <% } %>
+
+</div>
+
+
+<!-- Page-specific styling -->
+<style>
+    .notes-hero {
+        background: linear-gradient(135deg, #eef4ff 0%, #f8faff 100%);
+        border: 1px solid #e1eaff;
+    }
+
+    .notes-hero h1 {
+        color: #172554;
+        letter-spacing: -1px;
+    }
+
+    .stat-icon {
+        width: 58px;
+        height: 58px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .notes-search {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        max-width: 330px;
+        padding: 6px 12px;
+        background: #fff;
+        border: 1px solid #dee2e6;
+        border-radius: 12px;
+    }
+
+    .notes-search:focus-within {
+        border-color: #86b7fe;
+        box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.10);
+    }
+
+    .notes-search .form-control {
+        min-width: 0;
+    }
+
+    .note-card {
+        border: 1px solid #edf0f4;
+        background: #fff;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .note-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    .note-icon {
+        width: 46px;
+        height: 46px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 14px;
+        background: #eef4ff;
+        color: #0d6efd;
+        font-size: 1.4rem;
+    }
+
+    .note-label {
+        font-size: 0.72rem;
+        color: #64748b;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        padding: 6px 10px;
+        border-radius: 20px;
+    }
+
+    .note-label .bi-circle-fill {
+        color: #22c55e;
+        font-size: 0.48rem;
+        vertical-align: middle;
+    }
+
+    .note-title {
+        color: #172033;
+        overflow-wrap: anywhere;
+    }
+
+    .note-description {
+        line-height: 1.7;
+        overflow-wrap: anywhere;
+        white-space: pre-line;
+    }
+
+    .note-meta {
+        border-top: 1px solid #edf0f4;
+    }
+
+    .author-avatar {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f1f5f9;
+        color: #475569;
+        font-size: 1.1rem;
+        flex-shrink: 0;
+    }
+
+    .empty-state {
+        background: #fff;
+        border: 1px dashed #cbd5e1;
+    }
+
+    .empty-icon {
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 24px;
+        background: #eef4ff;
+        color: #0d6efd;
+        font-size: 2.5rem;
+    }
+
+    @media (max-width: 575.98px) {
+        .notes-hero {
+            padding: 1.5rem !important;
+        }
+
+        .notes-hero .btn {
+            width: 100%;
+        }
+
+        .notes-search {
+            max-width: 100%;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .note-card {
+            transition: none;
+        }
+
+        .note-card:hover {
+            transform: none;
+        }
+    }
+</style>
+
+
+<!-- Client-side search -->
+<script>
+    const searchInput = document.getElementById('noteSearch');
+    const noteItems = document.querySelectorAll('.note-item');
+    const noSearchResults = document.getElementById('noSearchResults');
+
+    if (searchInput) {
+        searchInput.addEventListener('input', function () {
+            const searchTerm = this.value.trim().toLowerCase();
+            let visibleCount = 0;
+
+            noteItems.forEach(function (item) {
+                const text = item.textContent.toLowerCase();
+                const matches = text.includes(searchTerm);
+
+                item.classList.toggle('d-none', !matches);
+
+                if (matches) {
+                    visibleCount++;
+                }
+            });
+
+            if (noSearchResults) {
+                noSearchResults.classList.toggle(
+                    'd-none',
+                    visibleCount !== 0
+                );
+            }
+        });
+    }
+</script>

@@ -1,0 +1,37 @@
+<% if (success && success.length) { %>
+    <% for (let msg of success) { %>
+        <div class="alert alert-success alert-dismissible fade show shadow-sm rounded-3 d-flex align-items-center gap-2" role="alert">
+            <i class="bi bi-check-circle-fill fs-5"></i>
+
+            <div class="flex-grow-1">
+                <%= msg %>
+            </div>
+
+            <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close">
+            </button>
+        </div>
+    <% } %>
+<% } %>
+
+<% if (error && error.length) { %>
+    <% for (let msg of error) { %>
+        <div class="alert alert-danger alert-dismissible fade show shadow-sm rounded-3 d-flex align-items-center gap-2" role="alert">
+            <i class="bi bi-exclamation-triangle-fill fs-5"></i>
+
+            <div class="flex-grow-1">
+                <%= msg %>
+            </div>
+
+            <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close">
+            </button>
+        </div>
+    <% } %>
+<% } %>

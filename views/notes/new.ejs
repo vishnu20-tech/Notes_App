@@ -1,0 +1,95 @@
+<% layout('./layouts/boilerplate') %>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-7">
+
+            <!-- Back Button -->
+            <a href="/allnotes" class="btn btn-outline-secondary btn-sm mb-4">
+                <i class="bi bi-arrow-left me-1"></i> Back to My Notes
+            </a>
+
+            <!-- Form Card -->
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body p-4 p-md-5">
+
+                    <!-- Header -->
+                    <div class="text-center mb-4">
+                        <div class="d-inline-flex align-items-center justify-content-center rounded-3 bg-primary-subtle text-primary p-3 mb-3">
+                            <i class="bi bi-journal-plus fs-2"></i>
+                        </div>
+
+                        <h2 class="fw-bold mb-2">Create a New Note</h2>
+                        <p class="text-muted mb-0">
+                            Capture your thoughts, ideas, and important information.
+                        </p>
+                    </div>
+
+                    <form action="/notes" method="POST">
+
+                        <!-- Title -->
+                        <div class="mb-4">
+                            <label for="title" class="form-label fw-semibold">
+                                Note Title
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control form-control-lg"
+                                id="title"
+                                name="title"
+                                placeholder="e.g. Learning Express.js"
+                                minlength="3"
+                                maxlength="100"
+                                required
+                            >
+
+                            <div class="form-text">
+                                Give your note a short, meaningful title.
+                            </div>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-4">
+                            <label for="description" class="form-label fw-semibold">
+                                Description
+                            </label>
+
+                            <textarea
+                                class="form-control"
+                                id="description"
+                                name="description"
+                                rows="7"
+                                placeholder="Write your thoughts here..."
+                                required
+                            ></textarea>
+
+                            <div class="form-text">
+                                Add the details you want to remember.
+                            </div>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="d-flex flex-column flex-sm-row gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg flex-grow-1">
+                                <i class="bi bi-check2-circle me-1"></i> Save Note
+                            </button>
+
+                            <a href="/allnotes" class="btn btn-outline-secondary btn-lg">
+                                Cancel
+                            </a>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+            <p class="text-center text-muted small mt-3">
+                <i class="bi bi-shield-check me-1"></i>
+                Your notes are associated with your account.
+            </p>
+
+        </div>
+    </div>
+</div>
